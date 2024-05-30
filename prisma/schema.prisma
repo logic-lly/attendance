@@ -15,24 +15,25 @@ datasource db {
 
 // Model representing the Department table
 model Department {
-  id   Int    @id @default(autoincrement()) // Assuming auto-incrementing integer ID
-  name String @db.VarChar(100) // Name of the department
-  code String @unique @db.VarChar(10) // Unique department code
+  id          String @id @default(uuid()) // Assuming auto-incrementing integer ID
+  name        String @db.VarChar(100) // Name of the department
+  code        String @unique @db.VarChar(10) // Unique department code
+  hodPassword String @unique
 }
 
 // Model representing the Teacher table
 model Teacher {
-  uuid         String @id // UUID as primary key
-  name         String @db.VarChar(100) // Name of the teacher
-  departmentId Int // Foreign key referencing Department.id
-  moduleId     String
+  uuid String @id // UUID as primary key
+  name String @db.VarChar(100) // Name of the teacher
+  // departmentId Int // Foreign key referencing Department.id
+  // moduleId     String[]
 }
 
 // Model representing the Student table
 model Student {
-  uuid         String @id // UUID as primary key
-  name         String @db.VarChar(100) // Name of the student
-  departmentId Int // Foreign key referencing Department.id
+  uuid String @id // UUID as primary key
+  name String @db.VarChar(100) // Name of the student
+  // departmentId Int // Foreign key referencing Department.id
 }
 
 // Model representing the Module table
