@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Model representing the Department table
+model Department {
+  id   Int    @id @default(autoincrement()) // Assuming auto-incrementing integer ID
+  name String @db.VarChar(100) // Name of the department
+  code String @unique @db.VarChar(10) // Unique department code
+}
+
+// Model representing the Teacher table
+model Teacher {
+  uuid         String @id // UUID as primary key
+  name         String @db.VarChar(100) // Name of the teacher
+  departmentId Int // Foreign key referencing Department.id
+  moduleId     String
+}
+
+// Model representing the Student table
+model Student {
+  uuid         String @id // UUID as primary key
+  name         String @db.VarChar(100) // Name of the student
+  departmentId Int // Foreign key referencing Department.id
+}
+
+// Model representing the Module table
+model Module {
+  code String @id @db.VarChar(10) // Code as primary key
+  name String @db.VarChar(100) // Name of the module
+}

@@ -1,0 +1,30 @@
+{
+  "name": "attendance",
+  "version": "1.0.0",
+  "description": "This project aims to provide a comprehensive solution for analyzing attendance data of both teachers and students within an educational institution. It is designed to assist the Head of Department in evaluating attendance patterns, identifying trends, and making informed decisions to improve overall attendance rates.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "LogicLly",
+  "repository": {
+    "github": "https://github.com/logic-lly/attendance.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "argon2": "^0.40.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-openid-connect": "^2.17.1",
+    "prisma": "^5.14.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.2"
+  }
+}
