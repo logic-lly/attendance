@@ -22,4 +22,21 @@ export default class DepartmentController {
       throw error;
     }
   }
+
+  static async getDepartment(code) {
+    try {
+      const department = await prisma.department.findUnique({
+        where: {
+          code,
+        },
+      });
+      if (!department) {
+        throw new Error("Department not found");
+      }
+      return department;
+    } catch (err) {
+      console.log("Couldn't get department: ", err);
+      throw err;
+    }
+  }
 }
