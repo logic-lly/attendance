@@ -10,6 +10,30 @@ body {
   box-sizing: border-box;
 }
 
+nav{
+  display: flex;
+  height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: #fab0b0;
+}
+
+nav ul{
+  list-style: none;
+}
+
+nav ul li{
+  display: inline-block;
+}
+
+nav ul li a{
+  display: block;
+  padding: 6px 12px;
+  background: #f58a8a;
+  text-transform: uppercase;
+}
+
 main {
   padding: 1rem;
   text-align: center;
@@ -21,7 +45,7 @@ main {
   border: 2px solid #f58a8a;
   border-radius: 8px;
   height: 40vh;
-  margin: 1rem 0;
+  margin: 1rem auto;
 }
 
 .students {

@@ -10,6 +10,15 @@
     </style>
   </head>
   <body>
+    <nav>
+      <h1>LOGO</h1>
+      <ul>
+        <li><a href="/"><%= navlinks.link1 %></a></li>
+        <li><a href="<%= navlinks.link2  %>"><%= navlinks.link2 %></a></li>
+        <li><a href="<%= navlinks.link3  %>"><%= navlinks.link3 %></a></li>
+      </ul>
+    </nav>
+
     <main>
       <h1><%= title %></h1>
       <p><%= description %></p>
@@ -30,7 +39,12 @@
         </div>
         <div class="formcheck">
           <label for="department"> Department: </label>
-          <input type="text" id="department" name="department" placeholder="Department" />
+          <input
+            type="text"
+            id="department"
+            name="department"
+            placeholder="Department"
+          />
         </div>
         <div class="formcheck">
           <label for="course"> Course: </label>
@@ -38,7 +52,7 @@
         </div>
         <div class="formcheck">
           <label for="class"> Class: </label>
-          <input type="text" id="class" name="class" placeholder="Class"/>
+          <input type="text" id="class" name="class" placeholder="Class" />
         </div>
         <button type="submit">REGISTER</button>
       </form>
