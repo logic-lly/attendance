@@ -1,9 +1,33 @@
 import express, { json, urlencoded } from "express";
 import DepartmentController from "../controllers/department.controller.js";
 import { PrismaClient } from "@prisma/client";
+import StudentsController from "../controllers/students.controller.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
+
+const navlinks = {
+  home: {
+    link1: "students",
+    link2: "teachers",
+    link3: "departments",
+  },
+  students: {
+    link1: "home",
+    link2: "teachers",
+    link3: "departments",
+  },
+  teachers: {
+    link1: "home",
+    link2: "students",
+    link3: "departments",
+  },
+  departments: {
+    link1: "home",
+    link2: "students",
+    link3: "teachers",
+  },
+};
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -12,6 +36,7 @@ router.get("/", (req, res) => {
   return res.render("pages/index", {
     title: "Home",
     description: "This is the home page of the application",
+    navlinks: navlinks.home,
   });
 });
 
@@ -19,6 +44,15 @@ router.get("/students", (req, res) => {
   return res.render("pages/students", {
     title: "Students",
     description: "This is the students page of the application",
+    navlinks: navlinks.students,
+  });
+});
+
+router.get("/teachers", (req, res) => {
+  return res.render("pages/teachers", {
+    title: "Teachers",
+    description: "This is the teachers page of the application",
+    navlinks: navlinks.teachers,
   });
 });
 
@@ -76,12 +110,12 @@ router.post("/get-dept", async (req, res) => {
 });
 
 router.get("/departments", async (req, res) => {
-  const departments = await prisma.department.findMany({});
-  console.log(departments);
+  // const departments = await prisma.department.findMany({});
+  // console.log(departments);
   return res.render("pages/departments", {
     title: "Departments",
     description: "This is the departments page of the application",
-    departments,
+    navlinks: navlinks.departments,
   });
 });
 
@@ -106,6 +140,18 @@ router.get("/department/:code", async (req, res) => {
     return res.status(500).send({
       message: "Internal server error",
     });
+  }
+});
+
+router.post("/student-registration", async (req, res) => {
+  const data = req.body;
+  try {
+    const student = await StudentsController.registerStudent(data);
+    return res.status(200).send(student.name)
+  } catch (error) {
+    console.log("Couldn't register student\n", error);
+    // throw(error);
+    return res.redirect("back")
   }
 });
 
