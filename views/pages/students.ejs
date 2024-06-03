@@ -6,13 +6,42 @@
     <title>STUDENTS</title>
     <style>
       @import url("css/main.css");
+      @import url("css/students.css");
     </style>
   </head>
   <body>
     <main>
       <h1><%= title %></h1>
       <p><%= description %></p>
-      <center class="teachers"></center>
+      <form action="/student-registration">
+        <h2>Student Registration</h2>
+        <div class="formcheck">
+          <label for="name"> Student's Name: </label>
+          <input type="text" id="name" name="name" placeholder="Full Name" />
+        </div>
+        <div class="formcheck">
+          <label for="registrationNumber"> Registration Number: </label>
+          <input
+            type="text"
+            id="registrationNumber"
+            name="registrationNumber"
+            placeholder="Registration Number"
+          />
+        </div>
+        <div class="formcheck">
+          <label for="department"> Department: </label>
+          <input type="text" id="department" name="department" placeholder="Department" />
+        </div>
+        <div class="formcheck">
+          <label for="course"> Course: </label>
+          <input type="text" id="course" name="course" placeholder="Course" />
+        </div>
+        <div class="formcheck">
+          <label for="class"> Class: </label>
+          <input type="text" id="class" name="class" placeholder="Class"/>
+        </div>
+        <button type="submit">REGISTER</button>
+      </form>
       <center class="students"></center>
     </main>
   </body>

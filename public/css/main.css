@@ -25,10 +25,10 @@ main {
 }
 
 .students {
-  width: calc(100% - 2rem);
+  width: calc(100% - 3rem);
   background: #fab0b0;
   border: 2px solid #f58a8a;
   border-radius: 8px;
   height: 60vh;
-  margin: 1rem 0;
+  margin: 1rem auto;
 }
