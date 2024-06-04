@@ -12,9 +12,8 @@ datasource db {
 
 // Model representing the Department table
 model Department {
-  id          String    @id @default(uuid()) // Assuming auto-incrementing integer ID
+  code        String    @id @unique @db.VarChar(10) // Unique department code
   name        String    @db.VarChar(100) // Name of the department
-  code        String    @unique @db.VarChar(10) // Unique department code
   hodPassword String    @unique
   teachers    Teacher[] // Relation to Teacher model
   students    Student[] // Relation to Student model
@@ -23,12 +22,12 @@ model Department {
 
 // Model representing the Teacher table
 model Teacher {
-  uuid         String       @id // UUID as primary key
-  name         String       @db.VarChar(100) // Name of the teacher
-  departmentId String // Foreign key referencing Department.id
-  department   Department   @relation(fields: [departmentId], references: [id])
-  modules      Module[] // Relation to Module model
-  attendance   Attendance[]
+  id             String       @id @default(uuid()) // UUID as primary key
+  name           String       @db.VarChar(100) // Name of the teacher
+  departmentCode String // Foreign key referencing Department.id
+  department     Department   @relation(fields: [departmentCode], references: [code])
+  modules        Module[] // Relation to Module model
+  attendance     Attendance[]
 }
 
 // Model representing the Classes Table
@@ -39,24 +38,33 @@ model Class {
 
 // Model representing the Student table
 model Student {
-  uuid         String       @id // UUID as primary key
-  name         String       @db.VarChar(100) // Name of the student
-  departmentId String // Foreign key referencing Department.id
-  department   Department   @relation(fields: [departmentId], references: [id])
-  attendance   Attendance[]
-  Class        Class?       @relation(fields: [className], references: [name])
-  className    String?
+  id             String       @id @default(uuid()) // UUID as primary key
+  name           String       @db.VarChar(100) // Name of the student
+  departmentCode String // Foreign key referencing Department.id
+  regnumber      BigInt       @unique
+  courseId       Int
+  course         Course       @relation(fields: [courseId], references: [id])
+  department     Department   @relation(fields: [departmentCode], references: [code])
+  attendance     Attendance[]
+  Class          Class?       @relation(fields: [className], references: [name])
+  className      String?
+}
+
+model Course {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Student Student[]
 }
 
 // Model representing the Module table
 model Module {
-  code         String       @id @db.VarChar(10) // Code as primary key
-  name         String       @db.VarChar(100) // Name of the module
-  teacherId    String // Foreign key referencing Teacher.uuid
-  teacher      Teacher      @relation(fields: [teacherId], references: [uuid])
-  attendance   Attendance[]
-  Department   Department?  @relation(fields: [departmentId], references: [id])
-  departmentId String?
+  code           String       @id @db.VarChar(10) // Code as primary key
+  name           String       @db.VarChar(100) // Name of the module
+  teacherId      String // Foreign key referencing Teacher.uuid
+  teacher        Teacher      @relation(fields: [teacherId], references: [id])
+  attendance     Attendance[]
+  Department     Department?  @relation(fields: [departmentCode], references: [code])
+  departmentCode String?
 }
 
 // Model representing the Attendance table
@@ -65,9 +73,9 @@ model Attendance {
   date       DateTime @default(now())
   present    Boolean
   teacherId  String? // Foreign key referencing Teacher.uuid
-  teacher    Teacher? @relation(fields: [teacherId], references: [uuid])
+  teacher    Teacher? @relation(fields: [teacherId], references: [id])
   studentId  String? // Foreign key referencing Student.uuid
-  student    Student? @relation(fields: [studentId], references: [uuid])
+  student    Student? @relation(fields: [studentId], references: [id])
   moduleCode String // Foreign key referencing Module.code
   module     Module   @relation(fields: [moduleCode], references: [code])
 }
