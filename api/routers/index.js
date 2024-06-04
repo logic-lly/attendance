@@ -2,6 +2,8 @@ import express, { json, urlencoded } from "express";
 import DepartmentController from "../controllers/department.controller.js";
 import { PrismaClient } from "@prisma/client";
 import StudentsController from "../controllers/students.controller.js";
+import TeachersController from "../controllers/teachers.controller.js";
+import { name } from "ejs";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -70,6 +72,42 @@ router.get("/register-modules-teacher", (req, res) => {
     description: "Register your assigned modules here",
     navlinks: navlinks.teachers,
   });
+});
+
+router.post("/teacher-registration", async (req, res) => {
+  const data = req.body;
+  // Validate input data (example)
+  if (!data.name || !data.departmentCode) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const teacherResponse = await TeachersController.registerTeacher(data);
+
+    if (teacherResponse.error) {
+      return res.status(409).json({ error: teacherResponse.error }); // Consider using 409 for conflict
+    }
+
+    // get the teacher's courses
+
+    const departmentModules = await DepartmentController.getModulesByDepartment(
+      teacherResponse.teacher.department.code
+    );
+
+    return res
+      .status(201)
+      .json({ success: true, teacher: teacherResponse.teacher })
+      .render("pages/register-modules-teacher", {
+        name: teacherResponse.teacher.name,
+        title: "Module Registration",
+        description: "Register your assigned modules here",
+        navlinks: navlinks.teachers,
+        modules: departmentModules,
+      });
+  } catch (error) {
+    console.error("Internal Server Error:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 router.post("/create-dept", async (req, res) => {

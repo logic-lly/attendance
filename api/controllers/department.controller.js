@@ -39,4 +39,28 @@ export default class DepartmentController {
       throw err;
     }
   }
+
+  static async getModulesByDepartment(departmentCode) {
+    try {
+      // Find the department by name and include its modules
+      const department = await prisma.department.findUnique({
+        where: { name: departmentCode },
+        include: { modules: true }, // Include the modules relation
+      });
+
+      // Check if the department was found
+      if (!department) {
+        throw new Error(`Department with code "${departmentCode}" not found.`);
+      }
+
+      // Extract and return only the modules
+      return department.modules.map((module) => ({
+        ...module,
+        department: undefined, // Optional: Exclude the department to avoid circular references
+      }));
+    } catch (error) {
+      console.error("Error fetching modules by department:", error);
+      throw error; // Rethrow the error to handle it at a higher level
+    }
+  }
 }
