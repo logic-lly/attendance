@@ -40,7 +40,6 @@ router.get("/", (req, res) => {
   });
 });
 
-
 router.get("/home", (req, res) => {
   return res.render("pages/index", {
     title: "Home",
@@ -61,6 +60,14 @@ router.get("/teachers", (req, res) => {
   return res.render("pages/teachers", {
     title: "Teachers",
     description: "This is the teachers page of the application",
+    navlinks: navlinks.teachers,
+  });
+});
+
+router.get("/register-modules-teacher", (req, res) => {
+  return res.render("pages/register-modules-teacher", {
+    title: "Module Registration",
+    description: "Register your assigned modules here",
     navlinks: navlinks.teachers,
   });
 });
