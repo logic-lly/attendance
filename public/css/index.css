@@ -1,0 +1,33 @@
+.nav {
+  width: calc(100% - 5rem);
+  padding: 1rem;
+  background: #ffc6c6;
+  /* background: #fab0b0; */
+  /* border: 2px solid #f58a8a; */
+  border-radius: 8px;
+  margin: 1rem auto;
+  display: grid;
+}
+
+.nav ul {
+  list-style: none;
+}
+
+.nav ul li {
+  margin: 1rem auto;
+  background-color: #fab0b0;
+  border-radius: 8px;
+}
+
+.nav ul li:hover{
+  background: #f58a8a;
+  cursor: pointer;
+}
+
+.nav ul li a {
+  text-transform: uppercase;
+  display: block;
+  padding: 1rem;
+  color: #111;
+  width: 100%;
+}

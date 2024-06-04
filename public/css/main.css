@@ -10,7 +10,7 @@ body {
   box-sizing: border-box;
 }
 
-nav{
+nav {
   display: flex;
   height: 60px;
   align-items: center;
@@ -19,15 +19,15 @@ nav{
   background: #fab0b0;
 }
 
-nav ul{
+nav ul {
   list-style: none;
 }
 
-nav ul li{
+nav ul li {
   display: inline-block;
 }
 
-nav ul li a{
+nav ul li a {
   display: block;
   padding: 6px 12px;
   background: #f58a8a;

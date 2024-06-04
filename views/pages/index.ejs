@@ -7,11 +7,12 @@
   <title>HOME</title>
   <style>
     @import url("css/main.css");
+    @import url("css/index.css");
   </style>
 </head>
 
 <body>
-  <%- include('../partials/header') %>
+  <%#- include('../partials/header') %>
 
     <main>
       <h1>
@@ -20,8 +21,15 @@
       <p>
         <%= description %>
       </p>
-      <center class="teachers"></center>
-      <center class="students"></center>
+
+      <div class="nav">
+        <h2>YOU CAN VISIT THE PAGES BELOW</h2>
+        <ul>
+          <li><a href="/teachers">teachers</a></li>
+          <li><a href="/classes">classes</a></li>
+          <li><a href="/attendance">attendance</a></li>
+        </ul>
+      </div>
     </main>
 </body>
 
