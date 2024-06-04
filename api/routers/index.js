@@ -10,19 +10,19 @@ const navlinks = {
   home: {
     link1: "students",
     link2: "teachers",
-    link3: "departments",
+    link3: "classes",
   },
   students: {
     link1: "home",
     link2: "teachers",
-    link3: "departments",
+    link3: "classes",
   },
   teachers: {
     link1: "home",
     link2: "students",
-    link3: "departments",
+    link3: "classes",
   },
-  departments: {
+  classes: {
     link1: "home",
     link2: "students",
     link3: "teachers",
@@ -33,6 +33,15 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 router.get("/", (req, res) => {
+  return res.render("pages/index", {
+    title: "Home",
+    description: "This is the home page of the application",
+    navlinks: navlinks.home,
+  });
+});
+
+
+router.get("/home", (req, res) => {
   return res.render("pages/index", {
     title: "Home",
     description: "This is the home page of the application",
@@ -109,30 +118,30 @@ router.post("/get-dept", async (req, res) => {
   }
 });
 
-router.get("/departments", async (req, res) => {
-  // const departments = await prisma.department.findMany({});
-  // console.log(departments);
-  return res.render("pages/departments", {
-    title: "Departments",
-    description: "This is the departments page of the application",
-    navlinks: navlinks.departments,
+router.get("/classes", async (req, res) => {
+  // const classes = await prisma.department.findMany({});
+  // console.log(classes);
+  return res.render("pages/classes", {
+    title: "Classes",
+    description: "This is the classes page of the application",
+    navlinks: navlinks.classes,
   });
 });
 
-router.get("/department/:code", async (req, res) => {
-  const { code } = req.params;
+router.get("/classes/:name", async (req, res) => {
+  const { name } = req.params;
   try {
-    const department = await DepartmentController.getDepartment(code);
-    if (!department) {
+    const Class = await ClassesController.getClass(name);
+    if (!Class) {
       return res.status(404).send({
-        message: "Department not found",
+        message: "Class not found",
       });
     } else {
-      console.log(department);
-      return res.render("pages/department", {
-        title: "Department",
-        description: "This is the department page of the application",
-        department,
+      console.log(Class);
+      return res.render("pages/classes", {
+        title: "Classes",
+        description: "This is the classes page of the application",
+        Class,
       });
     }
   } catch (error) {
@@ -147,11 +156,11 @@ router.post("/student-registration", async (req, res) => {
   const data = req.body;
   try {
     const student = await StudentsController.registerStudent(data);
-    return res.status(200).send(student.name)
+    return res.status(200).send(student.name);
   } catch (error) {
     console.log("Couldn't register student\n", error);
     // throw(error);
-    return res.redirect("back")
+    return res.redirect("back");
   }
 });
 
