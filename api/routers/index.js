@@ -66,6 +66,15 @@ router.get("/teachers", (req, res) => {
   });
 });
 
+router.get("/register-teacher", (req, res) => {
+  return res.render("pages/teachers", {
+    title: "Teachers",
+    description: "Fill in credentials below",
+    navlinks: navlinks.teachers,
+    newTeacher: true
+  });
+});
+
 router.post("/teacher-registration", async (req, res) => {
   const data = req.body;
   // Validate input data (example)
