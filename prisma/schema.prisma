@@ -13,39 +13,50 @@ datasource db {
 // Model representing the Department table
 model Department {
   id          String    @id @default(uuid()) // Assuming auto-incrementing integer ID
-  name        String    @db.VarChar(100)     // Name of the department
+  name        String    @db.VarChar(100) // Name of the department
   code        String    @unique @db.VarChar(10) // Unique department code
   hodPassword String    @unique
   teachers    Teacher[] // Relation to Teacher model
   students    Student[] // Relation to Student model
+  module      Module[]
 }
 
 // Model representing the Teacher table
 model Teacher {
-  uuid         String     @id // UUID as primary key
-  name         String     @db.VarChar(100) // Name of the teacher
-  departmentId String     // Foreign key referencing Department.id
-  department   Department @relation(fields: [departmentId], references: [id])
-  modules      Module[]   // Relation to Module model
+  uuid         String       @id // UUID as primary key
+  name         String       @db.VarChar(100) // Name of the teacher
+  departmentId String // Foreign key referencing Department.id
+  department   Department   @relation(fields: [departmentId], references: [id])
+  modules      Module[] // Relation to Module model
   attendance   Attendance[]
+}
+
+// Model representing the Classes Table
+model Class {
+  name     String    @id @unique
+  students Student[]
 }
 
 // Model representing the Student table
 model Student {
-  uuid         String     @id // UUID as primary key
-  name         String     @db.VarChar(100) // Name of the student
-  departmentId String     // Foreign key referencing Department.id
-  department   Department @relation(fields: [departmentId], references: [id])
+  uuid         String       @id // UUID as primary key
+  name         String       @db.VarChar(100) // Name of the student
+  departmentId String // Foreign key referencing Department.id
+  department   Department   @relation(fields: [departmentId], references: [id])
   attendance   Attendance[]
+  Class        Class?       @relation(fields: [className], references: [name])
+  className    String?
 }
 
 // Model representing the Module table
 model Module {
-  code        String    @id @db.VarChar(10) // Code as primary key
-  name        String    @db.VarChar(100)    // Name of the module
-  teacherId   String    // Foreign key referencing Teacher.uuid
-  teacher     Teacher   @relation(fields: [teacherId], references: [uuid])
-  attendance  Attendance[]
+  code         String       @id @db.VarChar(10) // Code as primary key
+  name         String       @db.VarChar(100) // Name of the module
+  teacherId    String // Foreign key referencing Teacher.uuid
+  teacher      Teacher      @relation(fields: [teacherId], references: [uuid])
+  attendance   Attendance[]
+  Department   Department?  @relation(fields: [departmentId], references: [id])
+  departmentId String?
 }
 
 // Model representing the Attendance table
@@ -53,10 +64,10 @@ model Attendance {
   id         String   @id @default(uuid())
   date       DateTime @default(now())
   present    Boolean
-  teacherId  String?  // Foreign key referencing Teacher.uuid
+  teacherId  String? // Foreign key referencing Teacher.uuid
   teacher    Teacher? @relation(fields: [teacherId], references: [uuid])
-  studentId  String?  // Foreign key referencing Student.uuid
+  studentId  String? // Foreign key referencing Student.uuid
   student    Student? @relation(fields: [studentId], references: [uuid])
-  moduleCode String   // Foreign key referencing Module.code
+  moduleCode String // Foreign key referencing Module.code
   module     Module   @relation(fields: [moduleCode], references: [code])
 }
