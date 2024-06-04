@@ -1,0 +1,52 @@
+form {
+  padding: 1rem;
+  max-width: 500px;
+  margin: 1rem auto;
+  border-radius: 7px;
+  background-color: rgb(245, 240, 240);
+}
+
+form h2 {
+  text-align: center;
+}
+
+.formcheck {
+  margin: 10px auto;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  /* background-color: rgb(239, 166, 166); */
+}
+
+.formcheck label {
+  width: 40%;
+  text-align: end;
+  padding: 10px;
+}
+
+.formcheck input {
+  width: 60%;
+  text-align: start;
+  padding: 10px;
+  background: none;
+  border: 1px solid rgb(221, 135, 135);
+  border-bottom: 3px solid rgb(221, 135, 135);
+  border-radius: 4px;
+}
+
+form button {
+  all: unset;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  background: rgb(249, 101, 101);
+  border: 1px solid rgb(248, 196, 196);
+  border-bottom: 3px solid rgb(251, 216, 216);
+  border-radius: 7px;
+}
+
+button[disabled] {
+  background: rgb(121, 85, 85);
+  border: none;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGISTER MODULES</title>
+  <style>
+    @import url('css/teachers-modules.css');
+    @import url('css/main.css');
+  </style>
+</head>
+
+<body>
+  <%- include('../partials/header') %>
+
+    <main>
+      <h1>
+        <%= title %>
+      </h1>
+      <p>
+        <%= description %>
+      </p>
+      <form>
+        <h2>Select your assigned modules</h2>
+        <label>
+          <input type="checkbox" name="options" value="Option1"> Option 1
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" name="options" value="Option2"> Option 2
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" name="options" value="Option3"> Option 3
+        </label>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+    </main>
+</body>
+
+</html>
