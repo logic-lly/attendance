@@ -66,14 +66,6 @@ router.get("/teachers", (req, res) => {
   });
 });
 
-router.get("/register-modules-teacher", (req, res) => {
-  return res.render("pages/register-modules-teacher", {
-    title: "Module Registration",
-    description: "Register your assigned modules here",
-    navlinks: navlinks.teachers,
-  });
-});
-
 router.post("/teacher-registration", async (req, res) => {
   const data = req.body;
   // Validate input data (example)
@@ -108,6 +100,22 @@ router.post("/teacher-registration", async (req, res) => {
     console.error("Internal Server Error:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
+});
+
+router.get("/register-modules-teacher", (req, res) => {
+  return res.render("pages/register-modules-teacher", {
+    title: "Module Registration",
+    description: "Register your assigned modules here",
+    navlinks: navlinks.teachers,
+  });
+});
+
+router.post("/register-modules-teacher", async (req, res) => {
+  // Access the values of the checkboxes
+  const selectedModulesValues = Object.values(req.body);
+  // Log the selected modules
+  console.log(selectedModulesValues);
+  return res.send(selectedModulesValues);
 });
 
 router.post("/create-dept", async (req, res) => {

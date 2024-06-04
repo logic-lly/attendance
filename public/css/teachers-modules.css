@@ -15,7 +15,9 @@ form h2 {
 
 label {
   background-color: #fff;
-  padding: 1rem 0;
+  text-align: start;
+  text-transform: uppercase;
+  padding: 1rem;
   border-radius: 8px;
 }
 

@@ -9,6 +9,7 @@
     @import url('css/teachers-modules.css');
     @import url('css/main.css');
   </style>
+  <script src="js/main.js" defer></script>
 </head>
 
 <body>
@@ -19,26 +20,35 @@
         <%= locals.title %>
       </h1>
       <p>
-        Dear <%= name %>,
-        <%= locals.description %>
+        Dear <%= locals.name %>,
+          <%= locals.description %>
       </p>
-      <form>
+      <form action="/register-modules-teacher" method="post">
         <h2>Select your assigned modules</h2>
         <label>
-          <input type="checkbox" name="options" value="Option1"> Option 1
+          <input type="checkbox" name="module1" id="module1" value="programming"> programming
         </label>
         <br>
         <label>
-          <input type="checkbox" name="options" value="Option2"> Option 2
+          <input type="checkbox" name="module2" id="module2" value="networking"> networking
         </label>
         <br>
         <label>
-          <input type="checkbox" name="options" value="Option3"> Option 3
+          <input type="checkbox" name="module3" id="module3" value="algebra"> algebra
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" name="module4" id="module4" value="web design"> web design
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" name="module5" id="module5" value="computer maintenance"> computer maintenance
         </label>
         <br>
         <input type="submit" value="Submit">
       </form>
     </main>
+
 </body>
 
 </html>
