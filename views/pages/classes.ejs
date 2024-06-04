@@ -7,6 +7,7 @@
   <title>CLASSES</title>
   <style>
     @import url("css/main.css");
+    @import url("css/classes.css");
   </style>
 </head>
 
@@ -20,8 +21,13 @@
       <p>
         <%= description %>
       </p>
-      <center class="teachers"></center>
-      <center class="students"></center>
+      <div class="nav">
+        <ul>
+          <% locals.classes.forEach(_class => { %>
+            <li><a href="/classes/<%= _class %>"><%= _class %></a></li>
+          <% }) %>
+        </ul>
+      </div>
     </main>
 </body>
 

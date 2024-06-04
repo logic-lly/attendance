@@ -3,7 +3,6 @@ import DepartmentController from "../controllers/department.controller.js";
 import { PrismaClient } from "@prisma/client";
 import StudentsController from "../controllers/students.controller.js";
 import TeachersController from "../controllers/teachers.controller.js";
-import { name } from "ejs";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -71,7 +70,7 @@ router.get("/register-teacher", (req, res) => {
     title: "Teachers",
     description: "Fill in credentials below",
     navlinks: navlinks.teachers,
-    newTeacher: true
+    newTeacher: true,
   });
 });
 
@@ -181,29 +180,37 @@ router.post("/get-dept", async (req, res) => {
 });
 
 router.get("/classes", async (req, res) => {
-  // const classes = await prisma.department.findMany({});
-  // console.log(classes);
+  const classes = [
+    "Beng19 COE",
+    "Beng19 MFT",
+    "Beng19 IT",
+    "Beng20 COE",
+    "Beng20 MFT",
+    "Beng20 IT",
+    "Beng21 COE",
+  ];
   return res.render("pages/classes", {
     title: "Classes",
     description: "This is the classes page of the application",
     navlinks: navlinks.classes,
+    classes,
   });
 });
 
 router.get("/classes/:name", async (req, res) => {
   const { name } = req.params;
   try {
-    const Class = await ClassesController.getClass(name);
-    if (!Class) {
+    const _class = await ClassesController.getClass(name);
+    if (!_class) {
       return res.status(404).send({
         message: "Class not found",
       });
     } else {
-      console.log(Class);
+      console.log(_class);
       return res.render("pages/classes", {
         title: "Classes",
         description: "This is the classes page of the application",
-        Class,
+        _class,
       });
     }
   } catch (error) {
