@@ -197,29 +197,101 @@ router.get("/classes", async (req, res) => {
   });
 });
 
-router.get("/classes/:name", async (req, res) => {
-  const { name } = req.params;
-  try {
-    const _class = await ClassesController.getClass(name);
-    if (!_class) {
-      return res.status(404).send({
-        message: "Class not found",
-      });
-    } else {
-      console.log(_class);
-      return res.render("pages/classes", {
-        title: "Classes",
-        description: "This is the classes page of the application",
-        _class,
-      });
+async function generateAttendanceData(students) {
+  let attendanceData = [];
+
+  for (let student of students) {
+    let lessonAttendance = [];
+    let presentCount = 0; // Count of "Present" days
+    for (let i = 1; i <= 15; i++) {
+      let index = Math.floor(Math.random() * 2); // Randomly choose Present or Absent
+      lessonAttendance.push(index === 0 ? "Present" : "Absent");
+      presentCount += index === 0 ? 1 : 0; // Increment present count if "Present"
     }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send({
-      message: "Internal server error",
+    let attendancePercentage = (presentCount / 15) * 100; // Calculate percentage
+    attendanceData.push({
+      name: student,
+      attendance: lessonAttendance,
+      percentage: attendancePercentage.toFixed(2),
     });
   }
+
+  return attendanceData;
+}
+
+
+router.get("/classes/:name", async (req, res) => {
+  const { name } = req.params;
+
+  let students = [
+    "Alice",
+    "Bob",
+    "Charlie",
+    "David",
+    "Emily",
+    "Frank",
+    "Grace",
+    "Hannah",
+    "Ivan",
+    "Julia",
+  ];
+
+  let attendanceData = await generateAttendanceData(students);
+
+  return res.render("pages/classDetails", {
+    _class: name,
+    navlinks: navlinks.classes,
+    students: attendanceData, // Pass the attendance data including percentages to the template
+  });
 });
+
+
+// router.get("/classes/:name", async (req, res) => {
+//   const { name } = req.params;
+//   let students = [
+//     "Alice",
+//     "Bob",
+//     "Charlie",
+//     "David",
+//     "Emily",
+//     "Frank",
+//     "Grace",
+//     "Hannah",
+//     "Ivan",
+//     "Julia",
+//   ];
+
+//   let attendanceStatus = ["Present", "Absent"];
+//   let index = Math.floor(Math.random() * attendanceStatus.length);
+//   let classes = [];
+//   return res.render("pages/classDetails", {
+//     _class: name,
+//     navlinks: navlinks.classes,
+//     classes,
+//     students, // Pass the students array to the template
+//     attendanceStatus: attendanceStatus[index], // Pass the attendance object to the template
+//   });
+// });
+// try {
+//   const _class = await ClassesController.getClass(name);
+//   if (!_class) {
+//     return res.status(404).send({
+//       message: "Class not found",
+//     });
+//   } else {
+//     console.log(_class);
+//     return res.render("pages/classes", {
+//       title: "Classes",
+//       description: "This is the classes page of the application",
+//       _class,
+//     });
+//   }
+// } catch (error) {
+//   console.error(error);
+//   return res.status(500).send({
+//     message: "Internal server error",
+//   });
+// }
 
 router.post("/student-registration", async (req, res) => {
   const data = req.body;

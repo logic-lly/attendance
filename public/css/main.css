@@ -31,6 +31,7 @@ nav ul li a {
   display: block;
   padding: 6px 12px;
   background: #f58a8a;
+  color: #111;
   text-transform: uppercase;
 }
 
@@ -55,4 +56,22 @@ main {
   border-radius: 8px;
   height: 60vh;
   margin: 1rem auto;
+}
+
+/* Optional: Define a class for better readability */
+.outlined-table {
+  margin: 1rem auto;
+  border-collapse: collapse; /* Combines borders into a single border */
+  width: 100%; /* Adjusts the table width */
+}
+
+.outlined-table th,
+.outlined-table td {
+  border: 2px solid #333; /* Defines the outline color and thickness */
+  padding: 8px; /* Adds space around the text */
+  text-align: left; /* Aligns text to the left */
+}
+
+.outlined-table th {
+  background-color: #f2f2f2; /* Light grey background for header cells */
 }
