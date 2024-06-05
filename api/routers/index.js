@@ -42,11 +42,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/home", (req, res) => {
-  return res.render("pages/index", {
-    title: "Home",
-    description: "This is the home page of the application",
-    navlinks: navlinks.home,
-  });
+  return res.redirect("/");
 });
 
 router.get("/students", (req, res) => {
@@ -219,10 +215,25 @@ async function generateAttendanceData(students) {
   return attendanceData;
 }
 
-
 router.get("/classes/:name", async (req, res) => {
   const { name } = req.params;
+  let modules = [
+    "Programming",
+    "Networking",
+    "Web Design",
+    "Computer Maintenance",
+  ];
+  return res.render("pages/select-module", {
+    title: `Modules for ${name}`,
+    description: "Select Module to view attendance",
+    _class: name,
+    navlinks: navlinks.classes,
+    modules,
+  });
+});
 
+router.get("/classes/:name/:_module", async (req, res) => {
+  const { name, _module } = req.params;
   let students = [
     "Alice",
     "Bob",
@@ -236,42 +247,21 @@ router.get("/classes/:name", async (req, res) => {
     "Julia",
   ];
 
-  let attendanceData = await generateAttendanceData(students);
+  const attendanceData = await generateAttendanceData(students);
 
+  let attendanceStatus = ["Present", "Absent"];
+  let index = Math.floor(Math.random() * attendanceStatus.length);
+  let classes = [];
   return res.render("pages/classDetails", {
     _class: name,
+    _module,
     navlinks: navlinks.classes,
-    students: attendanceData, // Pass the attendance data including percentages to the template
+    classes,
+    students: attendanceData, // Pass the students array to the template
+    attendanceStatus: attendanceStatus[index], // Pass the attendance object to the template
   });
 });
 
-
-// router.get("/classes/:name", async (req, res) => {
-//   const { name } = req.params;
-//   let students = [
-//     "Alice",
-//     "Bob",
-//     "Charlie",
-//     "David",
-//     "Emily",
-//     "Frank",
-//     "Grace",
-//     "Hannah",
-//     "Ivan",
-//     "Julia",
-//   ];
-
-//   let attendanceStatus = ["Present", "Absent"];
-//   let index = Math.floor(Math.random() * attendanceStatus.length);
-//   let classes = [];
-//   return res.render("pages/classDetails", {
-//     _class: name,
-//     navlinks: navlinks.classes,
-//     classes,
-//     students, // Pass the students array to the template
-//     attendanceStatus: attendanceStatus[index], // Pass the attendance object to the template
-//   });
-// });
 // try {
 //   const _class = await ClassesController.getClass(name);
 //   if (!_class) {

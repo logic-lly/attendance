@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CLASSES</title>
+  <title>HOME</title>
   <style>
     @import url("/css/main.css");
-    @import url("/css/classes.css");
+    @import url("/css/index.css");
   </style>
 </head>
 
@@ -26,11 +26,11 @@
       <br>
       <div class="nav">
         <ul>
-          <% locals.classes.forEach(_class=> { %>
-            <li><a href="/classes/<%= _class %>">
-                <%= _class %>
+          <% for( let i=0; i < modules.length; i++ ) { %>
+            <li><a href="<%= _class %>/<%= modules[i]  %>">
+                <%= modules[i] %>
               </a></li>
-            <% }) %>
+            <% } %>
         </ul>
       </div>
     </main>

@@ -12,9 +12,11 @@
 </head>
 
 <body>
+  <%- include('../partials/header') %>
+
   <main>
     <% if (locals._class) { %>
-      <h1>Attendance Records for <%= locals._class %>
+      <h1>Attendance Records for <%= locals._class %> in <%= locals._module %>
       </h1>
       <button onclick="window.history.back()">Back</button>
       <br>

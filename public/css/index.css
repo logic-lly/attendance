@@ -15,12 +15,12 @@
 
 .nav ul li {
   margin: 1rem auto;
-  background-color: #fab0b0;
+  background-color: #f58a8a;
   border-radius: 8px;
 }
 
-.nav ul li:hover{
-  background: #f58a8a;
+.nav ul li:hover {
+  background: #fab0b0;
   cursor: pointer;
 }
 
