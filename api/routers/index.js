@@ -33,7 +33,7 @@ const navlinks = {
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   return res.render("pages/index", {
     title: "Home",
     description: "This is the home page of the application",

@@ -7,72 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Model representing the Department table
+// Simplified Department table
 model Department {
-  code            String    @id @unique @db.VarChar(10) // Unique department code
-  name            String    @db.VarChar(100) // Name of the department
-  headOfDepartmentPassword String    @unique
-  teachers        Teacher[] // Relation to Teacher model
-  students        Student[] // Relation to Student model
-  modules         Module[]
+  code                     String @id @unique @db.VarChar(10)
+  name                     String @db.VarChar(100)
+  headOfDepartmentPassword String @unique
 }
 
-// Model representing the Teacher table
+// Simplified Teacher table
 model Teacher {
-  id              String       @id @default(uuid()) // UUID as primary key
-  name            String       @db.VarChar(100) // Name of the teacher
-  departmentCode  String // Foreign key referencing Department.code
-  department      Department   @relation(fields: [departmentCode], references: [code])
-  modules         Module[] // Relation to Module model
-  attendances     Attendance[]
+  id             String @id @default(uuid())
+  name           String @db.VarChar(100)
+  departmentCode String @db.VarChar(10)
 }
 
-// Model representing the Classes Table
+// Simplified Class table
 model Class {
-  name            String    @id @unique
-  enrolledStudents Student[]
+  name       String @id @unique
+  courseName String
 }
 
-// Model representing the Student table
+// Simplified Student table
 model Student {
-  id                String       @id @default(uuid()) // UUID as primary key
-  name              String       @db.VarChar(100) // Name of the student
-  departmentCode    String // Foreign key referencing Department.code
-  registrationNumber BigInt       @unique
-  courseId          Int
-  course           Course       @relation(fields: [courseId], references: [id])
-  department       Department   @relation(fields: [departmentCode], references: [code])
-  attendances      Attendance[]
-  className        String?
-  class            Class?       @relation(fields: [className], references: [name])
+  id                 String  @id @default(uuid())
+  name               String  @db.VarChar(100)
+  registrationNumber BigInt  @unique
+  courseId           Int
+  className          String?
 }
 
+// Simplified Course table
 model Course {
-  id      Int       @id @default(autoincrement())
-  name    String
-  students Student[]
+  id             Int    @id @default(autoincrement())
+  name           String
+  departmentCode String
 }
 
-// Model representing the Module table
+// Simplified Module table
 model Module {
-  code           String       @id @db.VarChar(10) // Code as primary key
-  name           String       @db.VarChar(100) // Name of the module
-  teacherId      String // Foreign key referencing Teacher.id
-  teacher        Teacher      @relation(fields: [teacherId], references: [id])
-  attendances    Attendance[]
-  departmentCode String?
-  department     Department?  @relation(fields: [departmentCode], references: [code])
+  code           String @id @db.VarChar(10)
+  name           String @db.VarChar(100)
+  departmentCode String
 }
 
-// Model representing the Attendance table
+// Simplified Attendance table
 model Attendance {
-  id         String   @id @default(uuid())
-  date       DateTime @default(now())
-  present    Boolean
-  teacherId  String? // Foreign key referencing Teacher.id
-  teacher    Teacher? @relation(fields: [teacherId], references: [id])
-  studentId  String? // Foreign key referencing Student.id
-  student    Student? @relation(fields: [studentId], references: [id])
-  moduleCode String // Foreign key referencing Module.code
-  module     Module   @relation(fields: [moduleCode], references: [code])
+  id        String   @id @default(uuid())
+  date      DateTime @default(now())
+  present   Boolean
+  studentId String
+  teacherId String
 }
