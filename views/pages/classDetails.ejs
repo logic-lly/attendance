@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLASS DETAILS</title>
+  <style>
+    @import url("/css/main.css");
+    @import url("/css/classDetails.css");
+  </style>
+</head>
+
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <% if (locals._class) { %>
+      <h1>Attendance Records for <%= locals._class %> in <%= locals._module %>
+      </h1>
+      <button onclick="window.history.back()">Back</button>
+      <br>
+
+      <table class="outlined-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <% for(let i=1; i<=15; i++) { %>
+              <th>Lesson <%= i %>
+              </th>
+              <% } %>
+                <th>Attendance (%)</th> <!-- New column header for attendance percentage -->
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let student of students) { %>
+            <tr>
+              <td>
+                <%= student.name %>
+              </td>
+              <% for(let i=0; i<student.attendance.length; i++) { %>
+                <td
+                  style="<%= student.attendance[i] === 'Present'? 'background-color: green; color: #111;' : 'background-color: rgb(247, 68, 68); color: #111;' %>">
+                  <%= student.attendance[i] %>
+                </td>
+                <% } %>
+                  <td>
+                    <%= student.percentage %>%
+                  </td> <!-- Display the attendance percentage -->
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+
+
+      <% } else {%>
+        <h1>Error! please try again!</h1>
+        <% } %>
+  </main>
+</body>
+
+</html>
